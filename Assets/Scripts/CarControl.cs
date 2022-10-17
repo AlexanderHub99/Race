@@ -18,6 +18,8 @@ public class CarControl : MonoBehaviour
 
     private float _vertical, _horizontal;
 
+    [SerializeField] private FixedJoystick _fixedJoystick;
+
     [SerializeField] private Transform _transformFL;
     [SerializeField] private Transform _transformFR;
     [SerializeField] private Transform _transformBL;
@@ -30,8 +32,8 @@ public class CarControl : MonoBehaviour
 
     public void FixedUpdate()
     {
-        _colliderBL.motorTorque = Input.GetAxis("Vertical") * force;
-        _colliderBR.motorTorque = Input.GetAxis("Vertical") * force;
+        _colliderBL.motorTorque = _fixedJoystick.Vertical * force;
+        _colliderBR.motorTorque = _fixedJoystick.Vertical * force;
         
         if (Input.GetKey(KeyCode.Space))
         {
@@ -48,8 +50,8 @@ public class CarControl : MonoBehaviour
             _colliderBR.brakeTorque = 0;
         }
 
-        _colliderFL.steerAngle = _maxAngle * Input.GetAxis("Horizontal");
-        _colliderFR.steerAngle = _maxAngle * Input.GetAxis("Horizontal");
+        _colliderFL.steerAngle = _maxAngle * _fixedJoystick.Horizontal;
+        _colliderFR.steerAngle = _maxAngle * _fixedJoystick.Horizontal;
 
         RotateWheel(_colliderFL, _transformFL);
         RotateWheel(_colliderFR, _transformFR);
